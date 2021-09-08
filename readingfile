@@ -1,0 +1,33 @@
+template <int dim>
+Triangulation<dim> reading_file(const std::string & input_file)
+{
+
+  const Triangulation<dim> &triangulation;
+
+  int pos_dot = intput_file.find(".");
+
+  std::string input_file_type = input_file.substr(pos_dot+1, input_file.length()-1);
+  
+  std::cout << "input file type is " << input_file_type << std::endl;
+
+  GridIn<dim> gridin;
+
+  gridin.attach_triangulation(triangulation);
+
+  std::ifstream f(input_file);
+
+  if (input_file_type.compare("vtu")){
+
+    gridin.read_vtu(f);
+
+  } else if (input_file_type.compare("msh"))
+
+  {
+   
+    gridin.read_msh(f);
+
+  }
+
+  return triangulation;
+
+}

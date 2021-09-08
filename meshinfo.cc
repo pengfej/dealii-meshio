@@ -13,6 +13,9 @@ using namespace dealii;
 
 void help_menu();
 void bound_func();
+//void reading_file();
+//void writing_file();
+
 
 int main(int argc, char *argv[]){
 
@@ -25,8 +28,6 @@ int main(int argc, char *argv[]){
 
     if (arg.compare(0,1,"-") == 0){
 
-//	std::cout << arg.at(1) << std::endl;
-
       if (arg == "-h") {
 
         help_menu();
@@ -35,23 +36,11 @@ int main(int argc, char *argv[]){
 
 	std::string output_file = argv[i];
 
-	int pos_dot = output_file.find(".");
-
-	std::string output_file_type = output_file.substr(pos_dot+1, output_file.length()-1);
-
-	std::cout << "input file type is: " << output_file_type << std::endl;
-
 	++i;
 
       } else if (arg == "-i") {
 
 	std::string input_file = argv[i];
-
-	int pos_dot = input_file.find(".");
-
-	std::string input_file_type = input_file.substr(pos_dot+1, input_file.length()-1);
-
-	std::cout << "input file type is: " << input_file_type << std::endl;
 
 	++i;
 
@@ -106,28 +95,13 @@ void bound_func(){
 
 }
 
-template <int dim>
-void print_mesh_info(const Triangulation<dim> &triangulation,
-                     const std::string &       filename)
-{
-  std::cout << "Mesh info:" << std::endl
-            << " dimension: " << dim << std::endl
-            << " no. of cells: " << triangulation.n_active_cells() << std::endl;
-  {
-    std::map<types::boundary_id, unsigned int> boundary_count;
-    for (const auto &face : triangulation.active_face_iterators())
-      if (face->at_boundary())
-        boundary_count[face->boundary_id()]++;
-    std::cout << " boundary indicators: ";
-    for (const std::pair<const types::boundary_id, unsigned int> &pair :
-         boundary_count)
-      {
-        std::cout << pair.first << "(" << pair.second << " times) ";
-      }
-    std::cout << std::endl;
-  }
-  std::ofstream out(filename);
-  GridOut       grid_out;
-  grid_out.write_vtu(triangulation, out);
-  std::cout << " written to " << filename << std::endl << std::endl;
-}
+
+//should have used template for this function.
+void reading_file(std::string input_type, std::string input_name, int dim){
+
+};
+
+
+void writing_file(std::string output_type, std::string output_name // and a triangulation.){
+
+};
