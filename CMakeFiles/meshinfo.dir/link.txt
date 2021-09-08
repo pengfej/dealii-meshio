@@ -1,0 +1,1 @@
+/usr/bin/c++      -rdynamic -fuse-ld=gold -lpthread -ggdb CMakeFiles/meshinfo.dir/meshinfo.cc.o  -o meshinfo -rdynamic /home/testinginf/dealII/lib/libdeal_II.g.so.10.0.0-pre -ldl -lrt -Wl,-rpath,/home/testinginf/dealII/lib 
