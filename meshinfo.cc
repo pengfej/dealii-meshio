@@ -14,6 +14,7 @@ using namespace dealii;
 
 void help_menu(){
 
+
   std::cout <<"Usage:     ./meshinfo <arg1> <arg2>" << std::endl;
   std::cout <<"           ./meshinfo <arg>" << std::endl;
 
@@ -21,9 +22,18 @@ void help_menu(){
 
   std::cout << "                      -i   <filename>  Input file." << std::endl;
   std::cout << "                      -o   <filename>  Output file." << std::endl;
-  std::cout << "                      -d   <dim>       Expected dimension.  " << std::endl;
+  std::cout << "                      -id  <dim>       Expected input dimension.  " << std::endl;
+  std::cout << "                      -od  <dim>       Expected output dimension. " << std::endl;
   std::cout << "                      -r   <refine#>   How many refine times are expected." << std::endl;
   std::cout << "                      -b               Extract boundary and output boundary ID" << std::endl;
+
+  
+  std::cout << "\n " << std::endl;
+  std::cout <<"When entering output file, make sure you enter the entire file name. \n" << 
+              "Like 'example.vtu' instead of 'example' or 'vtu', this way the nameing \n" <<
+              "of the output file is user defined so that it won't bother other files in the folder.\n" << std::endl;
+  std::cout << "\n" << std::endl;
+  std::cout << "dimension is by default, 2." << std::endl;
 
 }
 
@@ -149,6 +159,16 @@ void bound_func(const Triangulation<dim> &triangulation){
 
 
 int main(int argc, char *argv[]){
+    
+  bool input_flag = false;
+  bool out_dim_flag = false;
+  bool in_dim_flag = false;
+  bool output_flag = false;
+  bool bound_flag = false;
+  bool fine_flag = false;
+  
+  int dimension = 2;
+  int refine_times = 1;
 
   int i = 1;
 
@@ -164,42 +184,98 @@ int main(int argc, char *argv[]){
         help_menu();
 
       } else if (arg == "-o"){
+          
+        output_flag = true;
 
-	std::string output_file = argv[i];
+        std::string output_file = argv[i];
 
-	++i;
+        ++i;
 
       } else if (arg == "-i") {
+          
+        input_flag = true;
+        
+        std::string input_file = argv[i];
+        
+        ++i;
 
-	std::string input_file = argv[i];
+      } else if (arg == "-id"){
 
-	++i;
+        in_dim_flag = true;
+        
+        const int in_dim = atoi(argv[i]);
+        
+        ++i;
+        
+        std::cout << "The dimension of input file is: " << in_dim << std::endl;
 
-      } else if (arg == "-d"){
+      } else if (arg == "-od"){
 
-	int dimension = atoi(argv[i]);
-	++i;
+        out_dim_flag = true;
+        
+        const int out_dim = atoi(argv[i]);
+        
+        ++i;
+        
+        std::cout << "The dimension of output file is: " << out_dim << std::endl;
 
       } else if (arg == "-r"){
+          
+        fine_flag = true;
 
-	int refine_times = atoi(argv[i]);
-	++i;
+        refine_times = atoi(argv[i]);
+        
+        ++i;
 
       } else if (arg == "-b"){
 
-	//bound_func
+        bound_flag = true;
 
       } else {
 
-	std::cout <<"invalid input, please check the help menu. " << std::endl;
+        std::cout <<"invalid input, please check the help menu. " << std::endl;
 
-	help_menu();
+        help_menu();
 
       }
 
     }
 
   }
+  
+  
+  //If you don't read then you don't write.
+  
+  if (input_flag){
+      
+      switch(in_dim){
+          
+          case 2:
+              
+          case 3:
+              
+      }
+      
+      //Other operations will be plugged in this section. like refine and boundary output.
+      
+  
+      if (output_flag){
+      
+          switch(out_dim){
+              
+              case 2:
+                  
+              case 3:
+              
+          }
+          
+      
+    }
+  
+  } 
+  
+
+ 
 
   return EXIT_SUCCESS;
 
