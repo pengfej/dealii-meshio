@@ -48,7 +48,7 @@ void help_menu(){
   std::cout << "                      -id  <dim>       Expected input dimension. (not ready yet)  " << std::endl;
   std::cout << "                      -od  <dim>       Expected output dimension. (not ready yet)" << std::endl;
   std::cout << "                      -r   <refine#>   How many refine times are expected. (not ready yet)" << std::endl;
-  std::cout << "                      -b               Extract boundary and output boundary ID. (not ready yet)" << std::endl;
+  std::cout << "                      -b               Extract boundary and output boundary ID. " << std::endl;
 
 
   std::cout << "\n " << std::endl;
@@ -56,6 +56,8 @@ void help_menu(){
               "Like 'example.vtu' instead of 'example' or 'vtu', this way the nameing \n" <<
               "of the output file is user defined so that it won't bother other files in the folder.\n" << std::endl;
   std::cout << "\n" << std::endl;
+  std::cout << "test case: ./meshinfo -i *.msh -o *.vtu -b \n" << std::endl;
+  std::cout << "Where you replace * with a filename. \n " << std::endl;
 
 }
 
