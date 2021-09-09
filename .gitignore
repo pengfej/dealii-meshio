@@ -4,3 +4,6 @@ meshinfo
 readingfile
 CMakeFiles
 Makefile
+*.vtu
+*.msh
+*.gso
