@@ -46,10 +46,7 @@ void help_menu(){
 }
 
 template<int dim>
-Triangulation<dim> reading_file(const std::string& input_file){
-
-  //initialize tria
-  Triangulation<dim> triangulation;
+void reading_file(Triangulation<dim> &triangulation, const std::string& input_file){
 
   //find out file type
   int pos_dot = input_file.find(".");
@@ -68,8 +65,6 @@ Triangulation<dim> reading_file(const std::string& input_file){
 
   std::cout << "===========================================" << std::endl;
   std::cout << " input file complete." << std::endl;
-  return triangulation;
-
 }
 
 
@@ -105,8 +100,8 @@ void writing_file(Triangulation<dim> &triangulation, const std::string output_fi
    //output file
    std::ofstream out(output_file);
    GridOut       grid_out;
-   typename GridIn<dim>::Format writing_type = GridIn<dim>::parse_format(output_file_type);
-   grid_out.write(triangulation, out);
+   GridOut::OutputFormat writing_type = GridOut::parse_output_format(output_file_type);
+   grid_out.write(triangulation, out, writing_type);
 
 
    std::cout << "===========================================" << std::endl;
@@ -121,7 +116,6 @@ int main(int argc, char *argv[]){
 
   bool input_flag = false;
   bool output_flag = false;
-  bool dim_flag = false;
   // print bound is default, so it will always print
 
   int dim = 2;
@@ -155,7 +149,6 @@ int main(int argc, char *argv[]){
         std::cout << "input file name is " << input_file << std::endl;
         ++i;
       } else if (arg == "-d"){
-        dim_flag = true;
         dim = atoi(argv[i]);
         std::cout << "===========================================" << std::endl;
         std::cout << "The input dimension is: " << dim << std::endl;
@@ -168,23 +161,23 @@ int main(int argc, char *argv[]){
 
   }
 
+
   switch (dim){
 
     case 2:
-
         if (input_flag){
-          Triangulation<2> tria2 = reading_file<2>(input_file);
+          reading_file<2>(tria2, input_file);
           output_boundary_info<2>(tria2, boundary_info_file);
         }
 
         if (output_flag){
           writing_file<2>(tria2, output_file);
         }
+	break;
 
     case 3:
-
         if (input_flag){
-          Triangulation<3> tria3 = reading_file<3>(input_file);
+          reading_file<3>(tria3, input_file);
           output_boundary_info<3>(tria3, boundary_info_file);
         }
 
